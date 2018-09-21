@@ -15,9 +15,9 @@
     support yet.
   * When trying to upload any other file format a ValueError will be raised.
 * Installation
-** Open a shell and open the folder Giussepi Lopez
+** Open a shell and open the folder "hashtags_test"
    #+BEGIN_SRC shell
-     cd Giussepi_Lopez
+     cd hashtags_test
    #+END_SRC
 ** Create a virtual environment
    #+BEGIN_SRC shell
@@ -60,7 +60,7 @@
    Open a new tab on your browser and go to http://127.0.0.1:8082/
 * Configuration
 ** NUMBER OF COMMON WORDS PER FILE
-   1. Open your configuration file ('Giussepi_Lopez/eigentest/eigentest/settings.py')
+   1. Open your configuration file ('hashtags_test/eigentest/eigentest/settings.py')
    2. Go to the last line and change the number of common words to be extracted
       per file:
       #+BEGIN_SRC python

@@ -1,6 +1,7 @@
 *~
 #*#
 *.sqlite3
+*.tex
 
 eigentest/media/
 env/
