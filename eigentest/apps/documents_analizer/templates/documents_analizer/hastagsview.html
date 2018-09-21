@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load bootstrap4 hashtag_tags %}
+
+{% block body %}
+
+  {% bootstrap_pagination page_obj %}
+
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead class="thead-dark">
+	<tr>
+	  <th scope="col">Word(#)</th>
+	  <th scope="col">Documents</th>
+	  <th scope="col">Sentences containing the word</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for obj in object_list %}
+	<tr>
+          <th scope="row">{{ obj }}</th>
+	  <td>{{ obj|print_related_docs|safe }}</td>
+	  <td>{{ obj|print_sentences_with_hashtags|safe }}</td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% bootstrap_pagination page_obj %}
+
+{% endblock %}
+

@@ -1,0 +1,35 @@
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<!-- saved from url=(0059)http://getbootstrap.com/docs/4.1/examples/starter-template/ -->
+<html lang="en" class="gr__getbootstrap_com"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>Eigen Technology Coding Test</title>
+
+    {% bootstrap_css %}
+
+  </head>
+
+  <body data-gr-c-s-loaded="true">
+    <main role="main" class="container">
+
+      <div class="starter-template">
+        <h1><a href="{% url 'documents_analizer:home' %}">Eigen Technology Coding Test</a></h1>
+        {# <p class="lead"></p> #}
+
+	{% block body %}{% endblock %}
+	
+      </div>
+
+    </main><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+	 ================================================== -->
+    {% bootstrap_javascript jquery='full' %}  
+
+</body></html>

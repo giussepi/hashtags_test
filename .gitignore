@@ -1,0 +1,7 @@
+*~
+#*#
+*.sqlite3
+
+eigentest/media/
+env/
+__pycache__/

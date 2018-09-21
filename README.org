@@ -1,0 +1,97 @@
+#+TITLE: Eigen Technologies task
+#+DATE: <2018-09-21 Fri>
+#+DESCRIPTION: Hashtag task
+#+OPTIONS: toc:nil ^:nil
+
+* Assumptions
+  * We are extracting common words per file and not overall common
+    words, because a common word for a file may not be common or may not be
+    present in other file.
+  * By default we are extracting the 10 most common words per file.
+  * This app currently support files with extension: txt, docx and no entension
+    at all.
+  * When trying to upload a PDF file a NotImplementedError will be raised. This
+    means that we are considering that format but we have not implemented its
+    support yet.
+  * When trying to upload any other file format a ValueError will be raised.
+* Installation
+** Open a shell and open the folder Giussepi Lopez
+   #+BEGIN_SRC shell
+     cd Giussepi_Lopez
+   #+END_SRC
+** Create a virtual environment
+   #+BEGIN_SRC shell
+     virtualenv -p python3 env
+   #+END_SRC
+** Activate virtual environment
+   #+BEGIN_SRC shell
+     source env/bin/activate
+   #+END_SRC
+** Install requirements
+   #+BEGIN_SRC shell
+     pip install -r requirements.txt
+   #+END_SRC
+** Download required nltk data
+   #+BEGIN_SRC shell
+     python -m nltk.downloader -d env/share/nltk_data stopwords punkt gutenberg genesis
+     python -m nltk.downloader -d env/share/nltk_data inaugural nps_chat webtext treebank
+   #+END_SRC
+** Go to eigentest project
+   #+BEGIN_SRC shell
+     cd eigentest
+   #+END_SRC
+** Create the database
+   #+BEGIN_SRC shell
+     ./manage.py migrate
+   #+END_SRC
+** Create a django admin super user
+   #+BEGIN_SRC shell
+     ./manage.py createsuperuser
+   #+END_SRC
+** Run Django project
+   #+BEGIN_SRC shell
+     ./manage.py runserver 0.0.0.0:8082
+   #+END_SRC
+** Open the admin and add text files
+   1. Open your browser and go to http://127.0.0.1:8082/admin/
+   2. Login with the super user credentials created
+   3. Click on "Documents" and add some text files. Some sample files are on the folder "test docs".
+** Go to the homepage and navigate the results  
+   Open a new tab on your browser and go to http://127.0.0.1:8082/
+* Configuration
+** NUMBER OF COMMON WORDS PER FILE
+   1. Open your configuration file ('Giussepi_Lopez/eigentest/eigentest/settings.py')
+   2. Go to the last line and change the number of common words to be extracted
+      per file:
+      #+BEGIN_SRC python
+	COMMON_WORDS_NUMBER = <new number>      
+      #+END_SRC
+   3. If this change is done after having added some files through the admin run
+      the following management command to update the hashtags and their relations:
+      #+BEGIN_SRC shell
+        ./manage.py update_hashtags_relations
+      #+END_SRC
+      To do this fist stop the Django development, to do so just press CONTROL -
+      C. Then you can execute the management command (as shown in the above
+      line) and run again the Django development server:
+      #+BEGIN_SRC python
+	./manage.py runserver 0.0.0.0:8082
+      #+END_SRC
+* Extending to other document types and sources
+** Add support for more document types
+   Just add code to handle the new document type properly on the following methods:
+   * apps/documents_analizer/models.Document.get_full_text_from_source
+   * apps/documents_analizer/models.Document.get_lines_from_source
+** Add new text source
+   For instance, if you want to be able to read from a URLs then add an attribute to
+   store the url in the class apps/documents_analizer/models.Document:
+   #+BEGIN_SRC python
+     url = models.URLField(blank=True)
+   #+END_SRC
+   You also must to make it non required (blank=True) and also modify the
+   doc_file attribute to be non required too; furthermore, you must add a validation
+   to have at least one of those attributes.
+
+   The rest is modifying the two methods mentioned in the previous point to
+   consider the new field, and deciding if storing the url content or making an http
+   request all the time (the former is recommended).
